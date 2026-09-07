@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TourEase AI - Smart Travel Planner</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f4f8fb;
+    color: #172033;
+}
+
+/* HEADER */
+
+header {
+    background: linear-gradient(135deg, #116466, #087f8c);
+    color: white;
+    padding: 18px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
+    font-size: 15px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* HERO */
+
+.hero {
+    padding: 70px 7%;
+    text-align: center;
+    background: linear-gradient(135deg, #dff7f3, #e9f4ff);
+}
+
+.hero h1 {
+    font-size: 46px;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #07858c;
+}
+
+.hero p {
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.7;
+    font-size: 18px;
+}
+
+.tagline {
+    margin-top: 15px;
+    font-weight: bold;
+    color: #116466;
+}
+
+/* CONTAINER */
+
+.container {
+    width: 88%;
+    max-width: 1200px;
+    margin: 35px auto;
+}
+
+/* CARD */
+
+.card {
+    background: white;
+    padding: 28px;
+    margin-bottom: 25px;
+    border-radius: 18px;
+    box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+}
+
+.card h2 {
+    color: #116466;
+    margin-bottom: 20px;
+}
+
+/* PLANNER */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5df;
+    border-radius: 9px;
+    font-size: 15px;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #07858c;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.btn {
+    padding: 13px 28px;
+    border: none;
+    border-radius: 25px;
+    background: #07858c;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 22px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* RESULTS */
+
+.results {
+    display: none;
+}
+
+/* DESTINATION */
+
+.destination-header {
+    background: linear-gradient(135deg, #e5f8f6, #edf5ff);
+    padding: 25px;
+    border-radius: 14px;
+}
+
+.destination-header h2 {
+    font-size: 30px;
+}
+
+.badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.badge {
+    background: white;
+    border: 1px solid #d4e1e5;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+/* GRID */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.info-box {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.info-box h3 {
+    color: #116466;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    line-height: 1.6;
+}
+
+/* PLACES */
+
+.place-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.place {
+    padding: 20px;
+    border-radius: 12px;
+    background: #f6f9fb;
+    border: 1px solid #e2e8ee;
+}
+
+.place h3 {
+    color: #116466;
+    margin-bottom: 8px;
+}
+
+/* ITINERARY */
+
+.itinerary {
+    border-left: 5px solid #07858c;
+    padding: 18px;
+    margin: 15px 0;
+    background: #f3fbfb;
+    border-radius: 9px;
+}
+
+.itinerary h3 {
+    color: #116466;
+    margin-bottom: 10px;
+}
+
+.itinerary p {
+    margin: 7px 0;
+}
+
+/* BUDGET */
+
+.budget-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.budget-table th,
+.budget-table td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.budget-table th {
+    background: #eef7f7;
+}
+
+/* BUSINESS */
+
+.business-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.business {
+    padding: 20px;
+    background: #f6f9fb;
+    border-radius: 12px;
+}
+
+.business h3 {
+    color: #116466;
+    margin-bottom: 8px;
+}
+
+/* RESCUE */
+
+.rescue {
+    padding: 25px;
+    background: #fff8e6;
+    border-left: 5px solid #e6a000;
+    border-radius: 10px;
+}
+
+.rescue h3 {
+    color: #a36b00;
+    margin-bottom: 10px;
+}
+
+.rescue-btn {
+    background: #e6a000;
+}
+
+/* SCORE */
+
+.score-container {
+    text-align: center;
+}
+
+.score-number {
+    font-size: 65px;
+    font-weight: bold;
+    color: #07858c;
+}
+
+.progress {
+    height: 15px;
+    background: #e5e9ed;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 87%;
+    background: #07858c;
+}
+
+/* TIPS */
+
+.tips li {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+/* LOADING */
+
+.loading {
+    display: none;
+    text-align: center;
+    padding: 30px;
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #07858c;
+    border-radius: 50%;
+    margin: auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* FOOTER */
+
+footer {
+    background: #172033;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 7px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 800px) {
+
+    .form-grid,
+    .info-grid,
+    .place-grid,
+    .business-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .container {
+        width: 92%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        🌍 TourEase AI
+    </div>
+
+    <nav>
+        <a href="#planner">Planner</a>
+        <a href="#details">Details</a>
+        <a href="#itinerarySection">Itinerary</a>
+        <a href="#impact">Impact</a>
+    </nav>
+
+</header>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        Explore Smarter with
+        <span>TourEase AI</span>
+    </h1>
+
+    <p>
+        An Adaptive & Responsible Tourism Optimizer
+        that creates personalized travel plans and
+        automatically adapts when real-world conditions change.
+    </p>
+
+    <p class="tagline">
+        Plan → Monitor → Rescue → Re-plan
+    </p>
+
+</section>
+
+
+<div class="container">
+
+
+<!-- PLANNER -->
+
+<section class="card" id="planner">
+
+    <h2>🧳 Plan Your Trip</h2>
+
+    <div class="form-grid">
+
+        <div class="full">
+
+            <label>📍 Enter Any Destination</label>
+
+            <input
+                type="text"
+                id="destination"
+                placeholder="Example: Ooty, Chennai, Paris, Dubai, Kerala..."
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>📅 Number of Days</label>
+
+            <input
+                type="number"
+                id="days"
+                value="3"
+                min="1"
+                max="15"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>👥 Number of Travellers</label>
+
+            <input
+                type="number"
+                id="people"
+                value="2"
+                min="1"
+                max="20"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>💰 Total Budget (₹)</label>
+
+            <input
+                type="number"
+                id="budget"
+                value="10000"
+                min="500"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>❤️ Travel Interest</label>
+
+            <select id="interest">
+
+                <option value="mixed">
+                    🌍 Mixed
+                </option>
+
+                <option value="nature">
+                    🌳 Nature
+                </option>
+
+                <option value="culture">
+                    🏛️ Culture
+                </option>
+
+                <option value="food">
+                    🍴 Food
+                </option>
+
+                <option value="adventure">
+                    🧗 Adventure
+                </option>
+
+                <option value="shopping">
+                    🛍️ Shopping
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div>
+
+            <label>🌦️ Current Condition</label>
+
+            <select id="condition">
+
+                <option value="normal">
+                    ☀️ Normal
+                </option>
+
+                <option value="rain">
+                    🌧️ Heavy Rain
+                </option>
+
+                <option value="crowd">
+                    👥 High Crowd
+                </option>
+
+                <option value="delay">
+                    🚗 Transport Delay
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <button class="btn" onclick="generateTrip()">
+        🤖 Generate My Travel Plan
+    </button>
+
+</section>
+
+
+<!-- LOADING -->
+
+<div class="loading" id="loading">
+
+    <div class="spinner"></div>
+
+    <p style="margin-top:15px;">
+        TourEase AI is creating your personalized trip...
+    </p>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<div class="results" id="results">
+
+
+<!-- DESTINATION OVERVIEW -->
+
+<section class="card" id="details">
+
+    <div class="destination-header">
+
+        <h2 id="destinationTitle">
+            Destination
+        </h2>
+
+        <p id="destinationDescription"
+           style="margin-top:12px; line-height:1.7;">
+        </p>
+
+
+        <div class="badges">
+
+            <div class="badge">
+                📍 <span id="region"></span>
+            </div>
+
+            <div class="badge">
+                🌤️ <span id="weatherResult"></span>
+            </div>
+
+            <div class="badge">
+                👥 <span id="crowdResult"></span>
+            </div>
+
+            <div class="badge">
+                💰 Budget Friendly
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUICK DETAILS -->
+
+<section class="card">
+
+    <h2>📋 Destination Details</h2>
+
+    <div class="info-grid">
+
+        <div class="info-box">
+
+            <h3>🌦️ Weather</h3>
+
+            <p id="weatherInfo"></p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🚗 Transportation</h3>
+
+            <p id="transportInfo"></p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🏨 Stay</h3>
+
+            <p id="stayInfo"></p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🍴 Food</h3>
+
+            <p id="foodInfo"></p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>💡 Best Time</h3>
+
+            <p id="bestTime"></p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🎒 Travel Style</h3>
+
+            <p id="travelStyle"></p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ATTRACTIONS -->
+
+<section class="card">
+
+    <h2>📍 Recommended Attractions</h2>
+
+    <div class="place-grid" id="places">
+
+    </div>
+
+</section>
+
+
+<!-- ITINERARY -->
+
+<section class="card" id="itinerarySection">
+
+    <h2>🗓️ Personalized Itinerary</h2>
+
+    <div id="itinerary"></div>
+
+</section>
+
+
+<!-- BUDGET -->
+
+<section class="card">
+
+    <h2>💰 Smart Budget Planner</h2>
+
+    <table class="budget-table">
+
+        <thead>
+
+            <tr>
+                <th>Category</th>
+                <th>Estimated Cost</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>🏨 Accommodation</td>
+                <td id="hotelCost"></td>
+            </tr>
+
+            <tr>
+                <td>🍴 Food</td>
+                <td id="foodCost"></td>
+            </tr>
+
+            <tr>
+                <td>🚗 Transport</td>
+                <td id="transportCost"></td>
+            </tr>
+
+            <tr>
+                <td>🎟️ Activities</td>
+                <td id="activityCost"></td>
+            </tr>
+
+            <tr>
+                <th>Total Estimated Cost</th>
+                <th id="totalCost"></th>
+            </tr>
+
+            <tr>
+                <th>Remaining Budget</th>
+                <th id="remainingBudget"></th>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</section>
+
+
+<!-- LOCAL BUSINESS -->
+
+<section class="card">
+
+    <h2>🍴 Local Business Matching</h2>
+
+    <p style="margin-bottom:18px;">
+        TourEase AI recommends local businesses based on
+        your interests and budget.
+    </p>
+
+    <div class="business-grid">
+
+        <div class="business">
+
+            <h3>🍛 Local Restaurant</h3>
+
+            <p>
+                Traditional local cuisine
+            </p>
+
+            <p>
+                💰 ₹200–₹400
+            </p>
+
+            <p>
+                ⭐ Recommended for authentic food
+            </p>
+
+        </div>
+
+
+        <div class="business">
+
+            <h3>☕ Local Café</h3>
+
+            <p>
+                Local snacks and beverages
+            </p>
+
+            <p>
+                💰 ₹100–₹250
+            </p>
+
+            <p>
+                ⭐ Good for short breaks
+            </p>
+
+        </div>
+
+
+        <div class="business">
+
+            <h3>🛍️ Local Market</h3>
+
+            <p>
+                Handicrafts and local products
+            </p>
+
+            <p>
+                💰 Budget friendly
+            </p>
+
+            <p>
+                ⭐ Supports local sellers
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TRIP RESCUE -->
+
+<section class="card">
+
+    <h2>🚨 Adaptive Trip Rescue</h2>
+
+    <div class="rescue">
+
+        <h3 id="rescueTitle">
+            🟢 Trip Monitoring Active
+        </h3>
+
+        <p id="rescueText">
+            TourEase AI is monitoring weather,
+            crowd and travel conditions.
+        </p>
+
+
+        <button
+            class="btn rescue-btn"
+            onclick="activateRescue()">
+
+            🚨 Activate Trip Rescue
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- IMPACT -->
+
+<section class="card" id="impact">
+
+    <div class="score-container">
+
+        <h2>🌱 Tourism Impact Score</h2>
+
+        <div class="score-number"
+             id="score">
+            87
+        </div>
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+            </div>
+
+        </div>
+
+        <p>
+            Score based on tourist satisfaction,
+            budget efficiency, travel efficiency,
+            local business benefit and responsible tourism.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- TRAVEL TIPS -->
+
+<section class="card">
+
+    <h2>💡 Smart Travel Tips</h2>
+
+    <ul class="tips" id="tips">
+
+    </ul>
+
+</section>
+
+
+<!-- WHY TOUREASE -->
+
+<section class="card">
+
+    <h2>🤖 Why TourEase AI?</h2>
+
+    <div class="info-grid">
+
+        <div class="info-box">
+
+            <h3>🎯 Personalized</h3>
+
+            <p>
+                Recommendations are based on
+                destination, budget, duration and interests.
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🚨 Adaptive</h3>
+
+            <p>
+                The system can replace unsuitable
+                activities when conditions change.
+            </p>
+
+        </div>
+
+
+        <div class="info-box">
+
+            <h3>🌱 Responsible</h3>
+
+            <p>
+                Encourages local businesses and
+                less-crowded alternatives.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p><strong>🌍 TourEase AI</strong></p>
+
+    <p>
+        Adaptive & Responsible Tourism Optimizer
+    </p>
+
+    <p>
+        Plan → Monitor → Rescue → Re-plan
+    </p>
+
+</footer>
+
+
+<script>
+
+/*
+====================================================
+TOUREASE AI
+DESTINATION GENERATION ENGINE
+====================================================
+*/
+
+let currentDestination = "";
+let currentDays = 3;
+let currentPeople = 2;
+let currentBudget = 10000;
+
+
+/*
+DESTINATION CATEGORIES
+*/
+
+const destinationProfiles = {
+
+    ooty: {
+        region: "Tamil Nadu, India",
+        description:
+        "A scenic hill destination known for tea gardens, lakes, viewpoints and pleasant weather.",
+        places: [
+            ["🌿 Botanical Garden", "Nature & sightseeing"],
+            ["🏞️ Ooty Lake", "Boating & relaxation"],
+            ["⛰️ Doddabetta Peak", "Mountain viewpoint"],
+            ["🍵 Tea Museum", "Tea culture"],
+            ["🌲 Pine Forest", "Nature experience"],
+            ["🛍️ Ooty Market", "Local shopping"]
+        ],
+        food:
+        "Try local South Indian food, homemade chocolates and fresh tea.",
+        transport:
+        "Local taxis, buses and rental vehicles are common options.",
+        stay:
+        "Budget hotels, homestays and resorts are available.",
+        bestTime:
+        "October to June is generally popular for pleasant weather."
+    },
+
+
+    chennai: {
+        region: "Tamil Nadu, India",
+        description:
+        "A major coastal city combining beaches, temples, heritage sites, shopping and South Indian culture.",
+        places: [
+            ["🏖️ Marina Beach", "Beach & sightseeing"],
+            ["🛕 Kapaleeshwarar Temple", "Culture"],
+            ["🏛️ Fort St. George", "History"],
+            ["🎨 Government Museum", "Art & heritage"],
+            ["🛍️ T. Nagar", "Shopping"],
+            ["🌊 Besant Nagar Beach", "Relaxation"]
+        ],
+        food:
+        "Try dosa, idli, biryani, filter coffee and traditional Tamil cuisine.",
+        transport:
+        "Metro, buses, suburban trains, taxis and auto-rickshaws.",
+        stay:
+        "Hotels, hostels and serviced apartments across the city.",
+        bestTime:
+        "November to February is generally more comfortable."
+    },
+
+
+    madurai: {
+        region: "Tamil Nadu, India",
+        description:
+        "A historic temple city famous for architecture, traditional food and Tamil heritage.",
+        places: [
+            ["🛕 Meenakshi Amman Temple", "Heritage & culture"],
+            ["🏛️ Thirumalai Nayakkar Palace", "History"],
+            ["🌸 Flower Market", "Local culture"],
+            ["🛍️ Local Bazaar", "Shopping"],
+            ["🏛️ Gandhi Memorial Museum", "History"],
+            ["🍛 Traditional Food Street", "Food experience"]
+        ],
+        food:
+        "Explore jigarthanda, parotta, dosa, idli and traditional Tamil meals.",
+        transport:
+        "City buses, autos, taxis and rental vehicles.",
+        stay:
+        "Budget hotels, family hotels and premium accommodation.",
+        bestTime:
+        "October to March is generally comfortable for sightseeing."
+    },
+
+
+    kochi: {
+        region: "Kerala, India",
+        description:
+        "A coastal Kerala destination famous for colonial heritage, backwaters, art and local cuisine.",
+        places: [
+            ["🏘️ Fort Kochi", "Heritage"],
+            ["🏛️ Mattancherry Palace", "History"],
+            ["🌊 Marine Drive", "Waterfront"],
+            ["🎣 Chinese Fishing Nets", "Local culture"],
+            ["⛵ Kerala Backwaters", "Nature"],
+            ["🛍️ Jew Town", "Shopping & culture"]
+        ],
+        food:
+        "Try appam, seafood, Kerala meals, puttu and local snacks.",
+        transport:
+        "Metro, buses, ferries, taxis and auto-rickshaws.",
+        stay:
+        "Homestays, hotels, hostels and heritage stays.",
+        bestTime:
+        "October to March is a popular travel period."
+    },
+
+
+    bengaluru: {
+        region: "Karnataka, India",
+        description:
+        "A modern technology city with parks, heritage attractions, cafés, shopping and vibrant urban culture.",
+        places: [
+            ["🌳 Lalbagh Botanical Garden", "Nature"],
+            ["🌳 Cubbon Park", "Nature & relaxation"],
+            ["🏛️ Vidhana Soudha", "Architecture"],
+            ["🏰 Bangalore Palace", "Heritage"],
+            ["🛍️ Commercial Street", "Shopping"],
+            ["☕ Local Café District", "Food & cafés"]
+        ],
+        food:
+        "Try South Indian breakfast, filter coffee, local snacks and modern café food.",
+        transport:
+        "Metro, buses, taxis, autos and app-based transport.",
+        stay:
+        "Hotels, hostels, serviced apartments and homestays.",
+        bestTime:
+        "October to February is generally pleasant."
+    },
+
+
+    jaipur: {
+        region: "Rajasthan, India",
+        description:
+        "The Pink City is known for forts, palaces, traditional markets, crafts and Rajasthani culture.",
+        places: [
+            ["🏰 Amber Fort", "Heritage"],
+            ["🏯 City Palace", "History"],
+            ["🔭 Jantar Mantar", "Science & heritage"],
+            ["🏛️ Hawa Mahal", "Architecture"],
+            ["🛍️ Johari Bazaar", "Shopping"],
+            ["🍛 Local Food Street", "Food"]
+        ],
+        food:
+        "Try dal baati churma, kachori, lassi and Rajasthani thali.",
+        transport:
+        "Metro, buses, taxis, autos and rental vehicles.",
+        stay:
+        "Heritage hotels, hostels, homestays and budget hotels.",
+        bestTime:
+        "October to March is generally preferred."
+    },
+
+
+    delhi: {
+        region: "Delhi, India",
+        description:
+        "India's capital offers major historical monuments, museums, markets, food and cultural experiences.",
+        places: [
+            ["🏛️ Red Fort", "History"],
+            ["🕌 Qutub Minar", "Heritage"],
+            ["🇮🇳 India Gate", "Landmark"],
+            ["🏛️ Humayun's Tomb", "Heritage"],
+            ["🛍️ Chandni Chowk", "Shopping & food"],
+            ["🏛️ National Museum", "Culture"]
+        ],
+        food:
+        "Try chaat, paratha, kebab-style street food and North Indian cuisine.",
+        transport:
+        "Metro, buses, taxis and auto-rickshaws.",
+        stay:
+        "Hotels, hostels and serviced apartments.",
+        bestTime:
+        "October to March is generally more comfortable."
+    },
+
+
+    goa: {
+        region: "Goa, India",
+        description:
+        "A popular coastal destination offering beaches, Portuguese heritage, local cuisine and leisure activities.",
+        places: [
+            ["🏖️ Baga Beach", "Beach"],
+            ["🌊 Calangute Beach", "Beach"],
+            ["⛪ Basilica Heritage Area", "Culture"],
+            ["🏘️ Fontainhas", "Heritage"],
+            ["🌴 Palolem Area", "Nature"],
+            ["🛍️ Local Market", "Shopping"]
+        ],
+        food:
+        "Try Goan dishes, seafood, local breads and traditional snacks.",
+        transport:
+        "Taxis, buses, rental vehicles and local transport.",
+        stay:
+        "Hostels, hotels, guesthouses and resorts.",
+        bestTime:
+        "November to February is a popular season."
+    },
+
+
+    munnar: {
+        region: "Kerala, India",
+        description:
+        "A beautiful hill destination surrounded by tea plantations, valleys, viewpoints and forests.",
+        places: [
+            ["🍃 Tea Gardens", "Nature"],
+            ["🏞️ Mattupetty Dam", "Sightseeing"],
+            ["⛰️ Top Station", "Viewpoint"],
+            ["🌲 Eravikulam National Park", "Nature"],
+            ["💧 Attukad Waterfalls", "Waterfall"],
+            ["🍵 Tea Museum", "Tea culture"]
+        ],
+        food:
+        "Try Kerala meals, appam, tea, local snacks and fresh spices.",
+        transport:
+        "Taxis and local buses are common options.",
+        stay:
+        "Resorts, homestays, hotels and cottages.",
+        bestTime:
+        "September to March is generally popular."
+    }
+
+};
+
+
+/*
+DEFAULT PROFILE FOR ANY UNKNOWN DESTINATION
+*/
+
+function createGenericProfile(destination) {
+
+    return {
+
+        region: "Travel destination",
+
+        description:
+        destination +
+        " offers opportunities to explore local attractions, culture, food, shopping and nearby experiences. TourEase AI creates a personalized plan according to your selected preferences.",
+
+        places: [
+
+            ["📍 City Highlights", "Popular sightseeing"],
+
+            ["🏛️ Heritage Area", "Culture & history"],
+
+            ["🌳 Nature Spot", "Nature & relaxation"],
+
+            ["🍴 Local Food Street", "Food experience"],
+
+            ["🛍️ Local Market", "Shopping"],
+
+            ["🌅 Scenic Viewpoint", "Photography"]
+
+        ],
+
+        food:
+        "Explore authentic local cuisine, traditional dishes and popular food areas.",
+
+        transport:
+        "Use local buses, taxis, trains or other available city transportation.",
+
+        stay:
+        "Choose accommodation according to your budget, location and group size.",
+
+        bestTime:
+        "Check the destination's seasonal weather before finalizing your travel dates."
+
+    };
+
+}
+
+
+/*
+FIND DESTINATION
+*/
+
+function getProfile(destination) {
+
+    let key =
+        destination.toLowerCase()
+        .trim();
+
+    if(destinationProfiles[key]) {
+
+        return destinationProfiles[key];
+
+    }
+
+    return createGenericProfile(destination);
+
+}
+
+
+/*
+GENERATE TRIP
+*/
+
+function generateTrip() {
+
+    currentDestination =
+        document.getElementById("destination")
+        .value
+        .trim();
+
+    currentDays =
+        parseInt(
+            document.getElementById("days").value
+        );
+
+    currentPeople =
+        parseInt(
+            document.getElementById("people").value
+        );
+
+    currentBudget =
+        parseInt(
+            document.getElementById("budget").value
+        );
+
+
+    if(currentDestination === "") {
+
+        alert(
+            "Please enter a destination."
+        );
+
+        return;
+
+    }
+
+
+    if(currentDays < 1) {
+
+        alert(
+            "Please enter a valid number of days."
+        );
+
+        return;
+
+    }
+
+
+    document.getElementById("loading")
+        .style.display = "block";
+
+    document.getElementById("results")
+        .style.display = "none";
+
+
+    setTimeout(function() {
+
+        buildTrip();
+
+        document.getElementById("loading")
+            .style.display = "none";
+
+        document.getElementById("results")
+            .style.display = "block";
+
+        document.getElementById("results")
+            .scrollIntoView({
+                behavior: "smooth"
+            });
+
+    }, 1000);
+
+}
+
+
+/*
+BUILD COMPLETE TRIP
+*/
+
+function buildTrip() {
+
+    let profile =
+        getProfile(currentDestination);
+
+
+    /*
+    DESTINATION
+    */
+
+    document.getElementById(
+        "destinationTitle"
+    ).innerText =
+        "🌍 " + currentDestination;
+
+
+    document.getElementById(
+        "destinationDescription"
+    ).innerText =
+        profile.description;
+
+
+    document.getElementById(
+        "region"
+    ).innerText =
+        profile.region;
+
+
+    /*
+    WEATHER
+    */
+
+    let condition =
+        document.getElementById("condition")
+        .value;
+
+
+    let weatherText =
+        "☀️ Pleasant / Variable";
+
+    let crowdText =
+        "Moderate";
+
+
+    if(condition === "rain") {
+
+        weatherText =
+            "🌧️ Rain risk detected";
+
+    }
+
+    else if(condition === "crowd") {
+
+        crowdText =
+            "High";
+
+    }
+
+    else if(condition === "delay") {
+
+        weatherText =
+            "🌤️ Normal";
+
+    }
+
+
+    document.getElementById(
+        "weatherResult"
+    ).innerText =
+        weatherText;
+
+
+    document.getElementById(
+        "crowdResult"
+    ).innerText =
+        crowdText;
+
+
+    document.getElementById(
+        "weatherInfo"
+    ).innerText =
+        weatherText +
+        ". Check live weather before travel.";
+
+
+    document.getElementById(
+        "transportInfo"
+    ).innerText =
+        profile.transport;
+
+
+    document.getElementById(
+        "stayInfo"
+    ).innerText =
+        profile.stay;
+
+
+    document.getElementById(
+        "foodInfo"
+    ).innerText =
+        profile.food;
+
+
+    document.getElementById(
+        "bestTime"
+    ).innerText =
+        profile.bestTime;
+
+
+    let interest =
+        document.getElementById("interest")
+        .value;
+
+
+    document.getElementById(
+        "travelStyle"
+    ).innerText =
+        interest.charAt(0).toUpperCase()
+        + interest.slice(1)
+        + " focused";
+
+
+    /*
+    PLACES
+    */
+
+    let placesHTML = "";
+
+
+    profile.places.forEach(function(place) {
+
+        placesHTML += `
+
+            <div class="place">
+
+                <h3>${place[0]}</h3>
+
+                <p>
+                    ${place[1]}
+                </p>
+
+                <p style="margin-top:8px;">
+                    ⭐ AI Recommended
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById(
+        "places"
+    ).innerHTML =
+        placesHTML;
+
+
+    /*
+    ITINERARY
+    */
+
+    generateItinerary(
+        profile.places
+    );
+
+
+    /*
+    BUDGET
+    */
+
+    generateBudget();
+
+
+    /*
+    RESCUE
+    */
+
+    updateRescue();
+
+
+    /*
+    IMPACT SCORE
+    */
+
+    let score =
+        78 +
+        Math.floor(
+            Math.random() * 18
+        );
+
+
+    document.getElementById(
+        "score"
+    ).innerText =
+        score;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        score + "%";
+
+
+    /*
+    TIPS
+    */
+
+    document.getElementById(
+        "tips"
+    ).innerHTML = `
+
+        <li>📱 Keep important booking details accessible offline.</li>
+
+        <li>💰 Keep a small emergency budget.</li>
+
+        <li>🌦️ Check weather conditions before outdoor activities.</li>
+
+        <li>👥 Visit popular attractions during less busy periods.</li>
+
+        <li>🍴 Prefer authentic local food businesses where suitable.</li>
+
+        <li>🌱 Respect local culture, environment and community.</li>
+
+    `;
+
+}
+
+
+/*
+ITINERARY GENERATOR
+*/
+
+function generateItinerary(places) {
+
+    let html = "";
+
+    let totalDays =
+        currentDays;
+
+
+    for(
+        let day = 1;
+        day <= totalDays;
+        day++
+    ) {
+
+        let index1 =
+            ((day - 1) * 2)
+            % places.length;
+
+
+        let index2 =
+            ((day - 1) * 2 + 1)
+            % places.length;
+
+
+        let place1 =
+            places[index1][0];
+
+
+        let place2 =
+            places[index2][0];
+
+
+        html += `
+
+            <div class="itinerary">
+
+                <h3>
+                    📅 Day ${day}
+                </h3>
+
+                <p>
+                    🕘 <strong>09:00 AM</strong>
+                    — ${place1}
+                </p>
+
+                <p>
+                    🕛 <strong>12:00 PM</strong>
+                    — Local exploration
+                </p>
+
+                <p>
+                    🍴 <strong>02:00 PM</strong>
+                    — Local food experience
+                </p>
+
+                <p>
+                    🕒 <strong>03:30 PM</strong>
+                    — ${place2}
+                </p>
+
+                <p>
+                    🌆 <strong>06:00 PM</strong>
+                    — Local market / relaxation
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    document.getElementById(
+        "itinerary"
+    ).innerHTML =
+        html;
+
+}
+
+
+/*
+BUDGET CALCULATOR
+*/
+
+function generateBudget() {
+
+    let accommodation =
+        currentPeople *
+        currentDays *
+        900;
+
+
+    let food =
+        currentPeople *
+        currentDays *
+        500;
+
+
+    let transport =
+        currentPeople *
+        currentDays *
+        350;
+
+
+    let activities =
+        currentPeople *
+        currentDays *
+        300;
+
+
+    let total =
+        accommodation +
+        food +
+        transport +
+        activities;
+
+
+    let remaining =
+        currentBudget -
+        total;
+
+
+    document.getElementById(
+        "hotelCost"
+    ).innerText =
+        "₹" +
+        accommodation.toLocaleString();
+
+
+    document.getElementById(
+        "foodCost"
+    ).innerText =
+        "₹" +
+        food.toLocaleString();
+
+
+    document.getElementById(
+        "transportCost"
+    ).innerText =
+        "₹" +
+        transport.toLocaleString();
+
+
+    document.getElementById(
+        "activityCost"
+    ).innerText =
+        "₹" +
+        activities.toLocaleString();
+
+
+    document.getElementById(
+        "totalCost"
+    ).innerText =
+        "₹" +
+        total.toLocaleString();
+
+
+    document.getElementById(
+        "remainingBudget"
+    ).innerText =
+        "₹" +
+        remaining.toLocaleString();
+
+}
+
+
+/*
+TRIP RESCUE
+*/
+
+function updateRescue() {
+
+    let condition =
+        document.getElementById(
+            "condition"
+        ).value;
+
+
+    let title =
+        document.getElementById(
+            "rescueTitle"
+        );
+
+
+    let text =
+        document.getElementById(
+            "rescueText"
+        );
+
+
+    if(condition === "rain") {
+
+        title.innerText =
+            "🌧️ Weather Problem Detected";
+
+
+        text.innerText =
+            "Outdoor activities may be affected. " +
+            "TourEase AI can replace an outdoor attraction " +
+            "with an indoor or weather-friendly experience.";
+
+    }
+
+    else if(condition === "crowd") {
+
+        title.innerText =
+            "👥 High Crowd Detected";
+
+
+        text.innerText =
+            "The selected attraction may be crowded. " +
+            "TourEase AI can recommend a similar lower-crowd alternative.";
+
+    }
+
+    else if(condition === "delay") {
+
+        title.innerText =
+            "🚗 Transport Delay Detected";
+
+
+        text.innerText =
+            "A transportation delay may affect the itinerary. " +
+            "TourEase AI can reorder activities and optimize the route.";
+
+    }
+
+    else {
+
+        title.innerText =
+            "🟢 Trip Monitoring Active";
+
+
+        text.innerText =
+            "No major disruption is currently selected. " +
+            "TourEase AI continues monitoring the trip.";
+
+    }
+
+}
+
+
+/*
+ACTIVATE RESCUE
+*/
+
+function activateRescue() {
+
+    let profile =
+        getProfile(currentDestination);
+
+
+    let condition =
+        document.getElementById(
+            "condition"
+        ).value;
+
+
+    let rescuePlace =
+        profile.places[3][0];
+
+
+    let title =
+        document.getElementById(
+            "rescueTitle"
+        );
+
+
+    let text =
+        document.getElementById(
+            "rescueText"
+        );
+
+
+    if(condition === "rain") {
+
+        title.innerText =
+            "✅ Trip Rescued — Weather Adaptation";
+
+
+        text.innerHTML =
+            "The original outdoor activity has been replaced with " +
+            "<strong>" +
+            rescuePlace +
+            "</strong> " +
+            "as a weather-friendly alternative. " +
+            "Timing and route are automatically optimized.";
+
+    }
+
+    else if(condition === "crowd") {
+
+        title.innerText =
+            "✅ Trip Rescued — Crowd Adaptation";
+
+
+        text.innerHTML =
+            "High crowd detected. TourEase AI recommends " +
+            "<strong>" +
+            rescuePlace +
+            "</strong> " +
+            "as an alternative experience and adjusts the itinerary.";
+
+    }
+
+    else if(condition === "delay") {
+
+        title.innerText =
+            "✅ Trip Rescued — Route Re-optimized";
+
+
+        text.innerHTML =
+            "Transport delay detected. TourEase AI has reordered " +
+            "activities to reduce waiting time and keep the trip efficient.";
+
+    }
+
+    else {
+
+        title.innerText =
+            "🟢 No Rescue Required";
+
+
+        text.innerHTML =
+            "Current conditions are suitable. " +
+            "TourEase AI will continue monitoring the journey.";
+
+    }
+
+}
+
+
+/*
+ALLOW ENTER KEY
+*/
+
+document.getElementById(
+    "destination"
+).addEventListener(
+    "keypress",
+    function(event) {
+
+        if(event.key === "Enter") {
+
+            generateTrip();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
